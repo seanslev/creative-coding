@@ -3,31 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ransom Note</title>
-  <style>
-    .ransom-letter {
-      display: inline-block;
-      font-size: 200px;
-    }
   </style>
 </head>
 <body>
-  <p id="ransom-note"></p>
-
-  <script>
-    const text = "Hello world";
-    const colors = ["red", "blue", "green", "purple", "orange"];
-    
-    const ransomNote = document.getElementById("ransom-note");
-
-    for (let char of text) {
-      const span = document.createElement("span");
-      span.textContent = char;
-      span.className = "ransom-letter";
-      span.style.color = colors[Math.floor(Math.random() * colors.length)];
-      ransomNote.appendChild(span);
-    }
-  </script>
+  <p style='color: red; font-size: 20px; font-style: italic; font-weight: 700;'>I'm learning to code!</p>
+  .light-blue {
+  background-color: hsl(200, 70%, 50%);
+}
 </body>
 </html>
 
