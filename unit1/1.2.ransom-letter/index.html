@@ -17,7 +17,6 @@
   <script>
     const text = "Hello world";
     const colors = ["red", "blue", "green", "purple", "orange"];
-    const fonts = ["Arial", "Courier New", "Georgia", "Times New Roman", "Verdana"];
     
     const ransomNote = document.getElementById("ransom-note");
 
@@ -26,7 +25,6 @@
       span.textContent = char;
       span.className = "ransom-letter";
       span.style.color = colors[Math.floor(Math.random() * colors.length)];
-      span.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
       ransomNote.appendChild(span);
     }
   </script>
