@@ -5,9 +5,23 @@
     <title>A Webpage</title> 
 </head>
 <body>
+        <p id="ransom-note"></p>
 
-    <div>
-        <p>This is a paragraph.</p> 
-    </div>  
+  <script>
+    const text = "Hello, this is a ransom note!";
+    const colors = ["red", "blue", "green", "purple", "orange"];
+    const fonts = ["Arial", "Courier New", "Georgia", "Times New Roman", "Verdana"];
+    
+    const ransomNote = document.getElementById("ransom-note");
+
+    for (let char of text) {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.className = "ransom-letter";
+      span.style.color = colors[Math.floor(Math.random() * colors.length)];
+      span.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+      ransomNote.appendChild(span);
+    }
+    </script>  
 </body>
 </html> 
