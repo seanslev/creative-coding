@@ -1,6 +1,6 @@
 function setup() {
   // create a canvas
-  createCanvas(400, 400);
+  createCanvas(1000, 1000);
 
   // disable animation
   noLoop();
