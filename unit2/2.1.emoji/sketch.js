@@ -1,6 +1,6 @@
 function setup() {
   // create a canvas
-  createCanvas(1000, 1000);
+  createCanvas(400, 400);
 
   // disable animation
   noLoop();
@@ -13,7 +13,3 @@ function draw() {
  
 }
 
-function setup() {
-  circle(50, 50, 25);
-
-}
