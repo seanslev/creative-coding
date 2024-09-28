@@ -1,6 +1,6 @@
 var lineX = 216;
 var Xmove = 2;
-var RandColor = 
+
 function setup() {
   // create a canvas
   createCanvas(500, 500);
