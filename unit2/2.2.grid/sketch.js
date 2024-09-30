@@ -7,7 +7,7 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(0);
 
   translate(100,100);
   for (let x = 0; x < 8; x++){
