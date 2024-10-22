@@ -4,7 +4,7 @@ let x2 = 0;
 let y2 = 50;
 let xspeed = 5;
 let yspeed = 5;
-let img = samSmile;
+
 let collisionCount;
 // Load the image.
 //function preload() {
@@ -17,7 +17,7 @@ function preload() {
   samSad = loadImage('SamSad.png');
   samSmile = loadImage('SamSmile.png');
 }
-
+var img = samSmile;
 function setup() {
   createCanvas(650, 600);
   //image(samsmile,x,y)
