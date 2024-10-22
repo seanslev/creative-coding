@@ -4,7 +4,7 @@ let x2 = 0;
 let y2 = 50;
 let xspeed = 5;
 let yspeed = 5;
-let img;
+let img = samSmile;
 let collisionCount;
 // Load the image.
 //function preload() {
