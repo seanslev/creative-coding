@@ -2,9 +2,16 @@ let x = 0;
 let y = 0;
 let xspeed = 1;
 let yspeed = 1;
+
+let samsmile;
+
+let samsad;
+
 function preload() {
-  img = loadImage(
+  samsad = loadImage('SamSad.png');
+  samsmile = loadImage('SamSad.png');
 }
+
 function setup() {
   createCanvas(400, 400);
 }
@@ -24,6 +31,8 @@ function draw(){
   y = y + yspeed; // iterate y
 
   // draw a circle
-  fill("red");
-  circle(x, y, 50);
+  
+  circle(x,y,50);
+  //image(SamSmile,x, y, 50,50);
+  //SamSmile.mask(circle);
 }
