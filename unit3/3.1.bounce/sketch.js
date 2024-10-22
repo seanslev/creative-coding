@@ -17,7 +17,9 @@ function preload() {
   samSad = loadImage('SamSad.png');
   samSmile = loadImage('SamSmile.png');
 }
+
 var img = samSmile;
+
 function setup() {
   createCanvas(650, 600);
   //image(samsmile,x,y)
