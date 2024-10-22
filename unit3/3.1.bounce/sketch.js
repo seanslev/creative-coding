@@ -4,9 +4,7 @@ let x2 = 0;
 let y2 = 50;
 let xspeed = 5;
 let yspeed = 5;
-frameRate(1);
-let color = random(colors);
-let shapeRandom = random([rect, ellipse])
+
 //let img = document.createElement('img');
 //img.src = 'SamSmile.png'; // Replace with the actual path
 
