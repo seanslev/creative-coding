@@ -38,7 +38,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
-      let shapeRandom = random([rect, ellipse]);
+      
   }
   if (y < 0 | y > height-50){
       yspeed = yspeed * -1; // reverse the x direction
@@ -46,7 +46,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
-      let shapeRandom = random([rect, ellipse]);
+      
   }
   
   x = x + xspeed; // iterate x
