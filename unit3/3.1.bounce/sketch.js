@@ -13,16 +13,16 @@ let yspeed = 5;
 
 
 
-//function preload() {
-  //samsad = loadImage('SamSad.png');
-  //samsmile = loadImage('SamSad.png');
-//}
+function preload() {
+  samSad = loadImage('SamSad.png');
+  samSmile = loadImage('SamSmile.png');
+}
 
 function setup() {
   createCanvas(650, 600);
   //image(samsmile,x,y)
   //samsad = loadImage('SamSad.png');
-  //samsmile = loadImage('C:\Users\seanm\OneDrive\Documents\GitHub\creative-coding\unit3\3.1.bounce\SamSmile.png');
+  //SamSmile = loadImage('C:\Users\seanm\OneDrive\Documents\GitHub\creative-coding\unit3\3.1.bounce\SamSmile.png');
 }
 
 function draw(){
@@ -51,10 +51,11 @@ function draw(){
   y = y + yspeed; // iterate y
 
 
-  
+  //let angle = frameCount * 0.02;
+  //rotate(angle);
   // draw a circle
-  //image(SamSmile,x,y);
-  rect(x,y,50,50);
+  image(samSmile,x,y,50,50);
+  //rect(x,y,50,50);
   //ctx.drawImage(samsmile,x,y);
   //image(samsmile,x, y, 50,50);
   //SamSmile.mask(circle);
