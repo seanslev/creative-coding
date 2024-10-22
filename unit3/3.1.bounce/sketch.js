@@ -5,9 +5,6 @@ let y2 = 50;
 let xspeed = 5;
 let yspeed = 5;
 
-//let img = document.createElement('img');
-//img.src = 'SamSmile.png'; // Replace with the actual path
-
 
 // Load the image.
 //function preload() {
@@ -38,6 +35,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
+      img = SamSad
       
   }
   if (y < 0 | y > height-50){
@@ -46,6 +44,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
+      img = SamSad
       
   }
   
@@ -54,10 +53,10 @@ function draw(){
   y = y + yspeed; // iterate y
 
 
-
+  img = SamSmile
   // draw a circle
   //image(SamSmile,x,y);
-  rect(x,y,50,50);
+  image(img,x,y,50,50);
   //ctx.drawImage(samsmile,x,y);
   //image(samsmile,x, y, 50,50);
   //SamSmile.mask(circle);
