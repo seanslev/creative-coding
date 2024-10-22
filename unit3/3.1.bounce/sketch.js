@@ -4,6 +4,11 @@ let x2 = 0;
 let y2 = 50;
 let xspeed = 5;
 let yspeed = 5;
+frameRate(1);
+let color = random(colors);
+let shapeRandom = random([rect, ellipse])
+//let img = document.createElement('img');
+//img.src = 'SamSmile.png'; // Replace with the actual path
 
 
 // Load the image.
@@ -35,8 +40,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
-      img = SamSad
-      
+      let shapeRandom = random([rect, ellipse]);
   }
   if (y < 0 | y > height-50){
       yspeed = yspeed * -1; // reverse the x direction
@@ -44,8 +48,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
-      img = SamSad
-      
+      let shapeRandom = random([rect, ellipse]);
   }
   
   x = x + xspeed; // iterate x
@@ -53,10 +56,10 @@ function draw(){
   y = y + yspeed; // iterate y
 
 
-  img = SamSmile
+
   // draw a circle
   //image(SamSmile,x,y);
-  image(img,x,y,50,50);
+  rect(x,y,50,50);
   //ctx.drawImage(samsmile,x,y);
   //image(samsmile,x, y, 50,50);
   //SamSmile.mask(circle);
