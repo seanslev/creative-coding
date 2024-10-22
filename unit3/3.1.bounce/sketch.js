@@ -2,19 +2,21 @@ let x = 50;
 let y = 0;
 let x2 = 0;
 let y2 = 50;
-let xspeed = 1;
-let yspeed = 1;
-
+let xspeed = 5;
+let yspeed = 5;
+frameRate(1);
+let color = random(colors);
+let shapeRandom = random([rect, ellipse])
 //let img = document.createElement('img');
 //img.src = 'SamSmile.png'; // Replace with the actual path
 
 
 // Load the image.
-function preload() {
-  samsmile = loadImage('SamSmile.png');
-}
+//function preload() {
+ // samsmile = loadImage('output-onlinepngtools.png');
+//}
 
-let samsad;
+
 
 //function preload() {
   //samsad = loadImage('SamSad.png');
@@ -22,21 +24,31 @@ let samsad;
 //}
 
 function setup() {
-  createCanvas(600, 590);
-  image(samsmile,x,y)
+  createCanvas(650, 600);
+  //image(samsmile,x,y)
   //samsad = loadImage('SamSad.png');
   //samsmile = loadImage('C:\Users\seanm\OneDrive\Documents\GitHub\creative-coding\unit3\3.1.bounce\SamSmile.png');
 }
 
 function draw(){
-  background(220);
+  background(0);
   
   // check for collision with left and right edge
   if (x < 0 | x > width-50){
       xspeed = xspeed * -1; // reverse the x direction
+      let r = random(255);
+      let b = random(255);
+      let g = random(255);
+      fill(r,g,b);
+      let shapeRandom = random([rect, ellipse]);
   }
   if (y < 0 | y > height-50){
       yspeed = yspeed * -1; // reverse the x direction
+      let r = random(255);
+      let b = random(255);
+      let g = random(255);
+      fill(r,g,b);
+      let shapeRandom = random([rect, ellipse]);
   }
   
   x = x + xspeed; // iterate x
@@ -46,9 +58,10 @@ function draw(){
 
 
   // draw a circle
-  
+  //image(SamSmile,x,y);
+  rect(x,y,50,50);
   //ctx.drawImage(samsmile,x,y);
   //image(samsmile,x, y, 50,50);
   //SamSmile.mask(circle);
-  image(samsmile,x,y,50,50);
+  //image(samsmile,x,y,50,50);
 }
