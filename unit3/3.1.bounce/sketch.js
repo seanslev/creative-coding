@@ -5,6 +5,7 @@ let y2 = 50;
 let xspeed;
 let yspeed;
 frameRate(10);
+
 let frameCount = 10;
 let samSmile, samSad, currentImg;
 // Load the image.
