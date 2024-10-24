@@ -2,10 +2,11 @@ let x = 50;
 let y = 0;
 let x2 = 0;
 let y2 = 50;
-let xspeed = 5;
-let yspeed = 5;
+let xspeed;
+let yspeed;
 
-let collisionCount;
+let frameCount = 10;
+let samSmile, samSad, currentImg;
 // Load the image.
 //function preload() {
  // samsmile = loadImage('output-onlinepngtools.png');
@@ -16,12 +17,16 @@ let collisionCount;
 function preload() {
   samSad = loadImage('SamSad.png');
   samSmile = loadImage('SamSmile.png');
+  currentImg = samSmile
 }
 
-var img = samSmile;
+
 
 function setup() {
   createCanvas(650, 600);
+  xspeed = random(-5,5);
+  yspeed = random(-5,5);
+
   //image(samsmile,x,y)
   //samsad = loadImage('SamSad.png');
   //SamSmile = loadImage('C:\Users\seanm\OneDrive\Documents\GitHub\creative-coding\unit3\3.1.bounce\SamSmile.png');
@@ -37,7 +42,8 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
-      img = samSad;
+      frameCount = 0;
+      
       //collisionCount = frameCount;
   }
   if (y < 0 | y > height-50){
@@ -46,7 +52,7 @@ function draw(){
       let b = random(255);
       let g = random(255);
       fill(r,g,b);
-      img = samSad;
+      frameCount = 0;
       //collisionCount = frameCount;
       
   }
@@ -60,10 +66,12 @@ function draw(){
   //let angle = frameCount * 0.02;
   //rotate(angle);
   // draw a circle
-  image(samSmile,x,y,50,50);
+  image(currentImg,x,y,50,50);
 
-  if (collisionCount+40 < frameCount){
-    img= samSmile;
+  if (frameCount < 10){
+    currentImg= samSad;
+  } else{
+    currentImg = samSmile;
   }
   
   //rect(x,y,50,50);
