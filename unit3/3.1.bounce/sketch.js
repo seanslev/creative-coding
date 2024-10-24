@@ -4,7 +4,7 @@ let x2 = 0;
 let y2 = 50;
 let xspeed;
 let yspeed;
-frameRate(10);
+
 
 let frameCount = 10;
 let samSmile, samSad, currentImg;
@@ -71,6 +71,7 @@ function draw(){
 
   if (frameCount < 10){
     currentImg= samSad;
+    frameCount++;
   } else{
     currentImg = samSmile;
   }
