@@ -37,7 +37,7 @@ function draw(){
   background(0);
   
   // check for collision with left and right edge
-  if (x < 0 | x > width-50){
+  if (x < 0 | x > width-10s0){
       xspeed = xspeed * -1; // reverse the x direction
       let r = random(255);
       let b = random(255);
@@ -47,7 +47,7 @@ function draw(){
       
       //collisionCount = frameCount;
   }
-  if (y < 0 | y > height-50){
+  if (y < 0 | y > height-100){
       yspeed = yspeed * -1; // reverse the x direction
       let r = random(255);
       let b = random(255);
@@ -67,7 +67,7 @@ function draw(){
   //let angle = frameCount * 0.02;
   //rotate(angle);
   // draw a circle
-  image(currentImg,x,y,50,50);
+  image(currentImg,x,y,100,100);
 
   if (frameCount < 40){
     currentImg= samSad;
