@@ -4,7 +4,7 @@ let x2 = 0;
 let y2 = 50;
 let xspeed;
 let yspeed;
-
+frameRate(10);
 let frameCount = 10;
 let samSmile, samSad, currentImg;
 // Load the image.
@@ -24,8 +24,8 @@ function preload() {
 
 function setup() {
   createCanvas(650, 600);
-  xspeed = random(-5,5);
-  yspeed = random(-5,5);
+  xspeed = random([5,4,3,2,1,-1,-2,-3,-4,-5]);
+  yspeed = random([5,4,3,2,1,-1,-2,-3,-4,-5]);
 
   //image(samsmile,x,y)
   //samsad = loadImage('SamSad.png');
