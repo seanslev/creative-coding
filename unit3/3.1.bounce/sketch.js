@@ -37,7 +37,7 @@ function draw(){
   background(0);
   
   // check for collision with left and right edge
-  if (x < 0 | x > width-10s0){
+  if (x < 0 | x > width-100){
       xspeed = xspeed * -1; // reverse the x direction
       let r = random(255);
       let b = random(255);
