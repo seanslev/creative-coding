@@ -36,7 +36,7 @@ function draw(){
       let g = random(255);
       fill(r,g,b);
       img = samSad;
-      collisionCount = frameCount;
+      //collisionCount = frameCount;
   }
   if (y < 0 | y > height-50){
       yspeed = yspeed * -1; // reverse the x direction
@@ -45,7 +45,7 @@ function draw(){
       let g = random(255);
       fill(r,g,b);
       img = samSad;
-      collisionCount = frameCount;
+      //collisionCount = frameCount;
       
   }
   
@@ -58,7 +58,7 @@ function draw(){
   //let angle = frameCount * 0.02;
   //rotate(angle);
   // draw a circle
-  image(img,x,y,50,50);
+  image(samSmile,x,y,50,50);
 
   if (collisionCount+40 < frameCount){
     img= samSmile;
