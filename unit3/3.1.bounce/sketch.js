@@ -6,7 +6,7 @@ let xspeed;
 let yspeed;
 
 
-let frameCount = 10;
+let frameCount = 40;
 let samSmile, samSad, currentImg;
 // Load the image.
 //function preload() {
@@ -69,7 +69,7 @@ function draw(){
   // draw a circle
   image(currentImg,x,y,50,50);
 
-  if (frameCount < 10){
+  if (frameCount < 40){
     currentImg= samSad;
     frameCount++;
   } else{
