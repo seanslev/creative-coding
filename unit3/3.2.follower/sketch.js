@@ -1,5 +1,6 @@
 let speedfactor = 3; //Speed for the follower
 let yspeed = speedfactor; //y speed
+let xspeed = speedfactor;
 let x = 0; //x position
 let y = 0; //y position
 let followerImage; // Variable to hold the follower image
