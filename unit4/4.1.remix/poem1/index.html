@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--
+	Permutation poem adaptation of copyright (c) 2018, 2024 Nick Montfort <nickm@nickm.com>
+	based on a c. 1965 program by Brion Gysin & Ian Sommerville	
+	https://nickm.com/memslam/permutation_poems.html
+
+	this poem chooses 4 words and shows all possible combinations of their order, showing that all orders can mean something in poetry. there is no direct way to word a poem
+	-->
+	<style>
+		body {
+			margin: 0;
+			font-family: monospace;
+			font-size: clamp(1rem, 1vw, 1.5rem);
+			overflow:hidden;
+		}
+		header {
+			background: #ddd;
+			margin: 0;
+			border-bottom: #eee solid .2rem;
+			width: 100%;
+			height: 6.1rem;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+		}
+		header > h1 {
+			padding: .3rem .8rem .2rem .8rem;
+			font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', 
+				serif;
+			font-size: .85rem;
+			font-weight: normal;
+			white-space: nowrap;
+		}
+		a {
+			text-decoration: none;
+			color: #b00;
+		}
+		#main {
+			padding: 8rem 6vw 3vh 6vw;
+		}
+	</style>
+	<script>
+		const words = ['INTER', 'WAY', 'JOHN', 'SENT'];
+
+		function fullscreenListeners(f)
+		{
+			f("mozfullscreenchange", fullscreenEvt);
+			f("MSFullscreenChange", fullscreenEvt);
+			f("fullscreenchange", fullscreenEvt);
+			f("webkitfullscreenchange", fullscreenEvt);
+		}
+
+		function fullscreenEvt(incomingReq)
+		{
+			fullscreenListeners(document.removeEventListener);
+			if(incomingReq === true || document.mozFullScreen || 
+			document.fullscreenElement || document.webkitIsFullScreen || 
+			document.msFullscreenElement) {
+				var fsElt;
+				if(window.c instanceof HTMLCanvasElement) fsElt = window.c;
+				else fsElt = document.documentElement;
+				if (fsElt.requestFullscreen) fsElt.requestFullscreen();
+				else if (fsElt.msRequestFullscreen) fsElt.msRequestFullscreen();
+				else if (fsElt.mozRequestFullScreen)
+					fsElt.mozRequestFullScreen();
+				else if (fsElt.webkitRequestFullScreen) 
+					fsElt.webkitRequestFullScreen();
+				nav.style.display = "none";
+				main.style.paddingTop = "0";
+			}
+			else nav.style.display = "block";
+			main.style.paddingTop = "9rem";
+			if (typeof l === "function") setTimeout(l, 200);
+			fullscreenListeners(document.addEventListener);
+		}
+
+		// Note that while the following function produces all permutations,
+		// it does not produce them in the same order that Gysin and Sommerville
+		// did! A more sophisticated (but more complex) permutation poem system
+		// is available at https://davidpocknee.ricercata.org/gysin/
+		function all_permutations(input) {
+			// Thanks to user delimited on StackOverflow
+			var result = [];
+			function permute(elements, data) {
+				var current, memo = data || [];
+				for (var i = 0; i < elements.length; i++) {
+					current = elements.splice(i, 1)[0];
+					if (elements.length === 0) {
+						result.push(memo.concat([current]));
+					}
+					permute(elements.slice(), memo.concat([current]));
+					elements.splice(i, 0, current);
+				}
+				return result;
+			}
+			return permute(input);
+		}
+
+		function displayPermutations() {
+			var last, text = '', permutations, i, j, main = document.getElementById('main');
+			last = document.createElement('div');
+			permutations = all_permutations(words);
+			for (i in permutations) {
+				for (j in permutations[i]) {
+					text = text + permutations[i][j] + ' ';
+				}
+				text = text + '<br />';
+			}
+			last.innerHTML = text;
+			main.appendChild(last);
+		}
+	</script>
+	<title>Permutation Poems</title>
+</head>
+<body onload="displayPermutations();">
+	<header id=nav>
+		<h1>
+			<span style="float: right; font-size: 150%">
+			<a onclick=fullscreenEvt(true)>⛶</a>
+			</span>
+			Permutation Poems (1960s)<br>
+			based on a work by 
+	<a href="https://en.wikipedia.org/wiki/Brion_Gysin">Brion Gysin</a> &amp; 
+	<a href="https://en.wikipedia.org/wiki/Ian_Sommerville_(technician)">Ian 
+			Sommerville</a><br>
+			code by <a href="https://nickm.com">Nick Montfort,</a> 
+			also in <a href="permutation_poems.py">Python 2/3</a><br>
+			from <a href="https://nickm.com/memslam/">Memory Slam 2.0:</a> 
+			Batch-Era Text Generators<br>
+			edit line 50 of the HTML source for a new poem
+		</h1>
+	</header>
+	<div id=main></div>
+</body>
+</html>
