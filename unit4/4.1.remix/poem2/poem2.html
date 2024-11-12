@@ -1,1 +1,149 @@
-l
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset=utf-8>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--
+	Stochastic Texts reimplementation
+	copyright (c) 2014, 2023 Nick Montfort <nickm@nickm.com>
+	based on a 1959 program (Stochastische Texte) by Theo Lutz
+	translation of Lutz’s German text by Helen MacCormack
+
+	Copying and distribution of this file, with or without modification,
+	are permitted in any medium without royalty provided the copyright
+	notice and this notice are preserved. This file is offered as-is,
+	without any warranty.
+	-->
+	<style>
+		body {
+			margin: 0;
+			font-family: monospace;
+			font-size: clamp(1rem, 1vw, 1.5rem);
+			overflow:hidden;
+		}
+		header {
+			background: #ddd;
+			margin: 0;
+			border-bottom: #eee solid .2rem;
+			width: 100%;
+			height: 5.2rem;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+		}
+		header > h1 {
+			padding: .3rem .8rem .2rem .8rem;
+			font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', 
+				serif;
+			font-size: .85rem;
+			font-weight: normal;
+			white-space: nowrap;
+		}
+		a {
+			text-decoration: none;
+			color: #b00;
+		}
+		#main {
+			padding: 8rem 6vw 3vh 6vw;
+		}
+	</style>
+	<script>
+		var t = 0, caps = false, pause = false;
+
+		const subjects = ['meadow', 'family', 'flame', 'cottage', 'maiden', 
+			'fantasy', 'mountain', 'moon', 'storm', 'heart', 'enchant', 'clock', 
+			'jest', 'dream', 'purpose', 'secret','window'],
+		predicates = ['vast', 'radiant', 'rough', 'delicate', 'soothing', 'tattered', 
+			'jealous', 'fierce', 'curious', 'calm', 'brown', 'gloomy', 'lit', 'soft', 
+			'young', 'old','warm'],
+		conjunctions = [' and ', ' or ', ' therefore ', '. ', '. ', '. ', 
+			'. ', '. '],
+		quants = ['a', 'every', 'no', 'not every'];
+
+		function fullscreenListeners(f)
+		{
+			f("mozfullscreenchange", fullscreenEvt);
+			f("MSFullscreenChange", fullscreenEvt);
+			f("fullscreenchange", fullscreenEvt);
+			f("webkitfullscreenchange", fullscreenEvt);
+		}
+
+		function fullscreenEvt(incomingReq)
+		{
+			fullscreenListeners(document.removeEventListener);
+			if(incomingReq === true || document.mozFullScreen || 
+			document.fullscreenElement || document.webkitIsFullScreen || 
+			document.msFullscreenElement) {
+				var fsElt;
+				if(window.c instanceof HTMLCanvasElement) fsElt = window.c;
+				else fsElt = document.documentElement;
+				if (fsElt.requestFullscreen) fsElt.requestFullscreen();
+				else if (fsElt.msRequestFullscreen) fsElt.msRequestFullscreen();
+				else if (fsElt.mozRequestFullScreen)
+					fsElt.mozRequestFullScreen();
+				else if (fsElt.webkitRequestFullScreen) 
+					fsElt.webkitRequestFullScreen();
+				nav.style.display = "none";
+				main.style.paddingTop = "0";
+			}
+			else nav.style.display = "block";
+			main.style.paddingTop = "8rem";
+			if (typeof l === "function") setTimeout(l, 200);
+			fullscreenListeners(document.addEventListener);
+		}
+
+		function pick(array) {
+			var i = Math.floor(Math.random() * (array.length));
+			return array[i];
+		}
+
+		function quantSubj() {
+			var text = pick(quants) + ' ' + pick(subjects);
+			return text.replace(/a e/, 'an e')
+		}
+
+		function nextText() {
+			var last, text, main = document.getElementById('main');
+			if (pause) setTimeout(nextText, 300);
+			else {
+				if (50 > t) t += 1;
+				else main.removeChild(main.firstChild);
+				last = document.createElement('div');
+				text = quantSubj() + ' is ' + pick(predicates) + 
+					pick(conjunctions) + quantSubj() + ' is ' + 
+					pick(predicates) + '.';
+				text = text.replace(/\. (.)/, 
+					(_, p) => '. ' + p.toUpperCase());
+				text = Array.from(text)[0].toUpperCase() + text.slice(1)
+				text += '<br><br>';
+				last.innerHTML = caps ? text.toUpperCase() : text;
+				main.appendChild(last);
+				main.lastChild.scrollIntoView({block:"end", behavior:"smooth"});
+			setTimeout(nextText, 3000);
+			}
+		}
+	</script>
+	<title>Lutz’s Stochastic Texts (Reimplementation)</title>
+</head>
+<body onload=nextText()>
+	<header id=nav>
+		<h1>
+			<span style="float: right; font-size: 150%; clear:both"><a id=pb 
+			onclick="pause=!pause;pb.style.color=pause?'black':'red'">⏸</a>
+			<a id=cl 
+			onclick="caps=!caps;cl.style.color=caps?'black':'red'">⇪</a> 
+			<a onclick=fullscreenEvt(true)>⛶</a>
+			</span>
+			Stochastic Texts by <a href="https://monoskop.org/Theo_Lutz">Theo 
+			Lutz</a> (1959)<br>
+			text trans. Helen MacCormack<br>
+			code by <a href="https://nickm.com">Nick Montfort,</a> English 
+			also in <a href="stochastic_texts.py">Python 2/3</a><br>
+			from <a href="https://nickm.com/memslam">Memory Slam 2.0:</a> 
+			Batch-Era Text Generators
+		</h1>
+		</header>
+	<div id=main></div>
+</body>
+</html>
