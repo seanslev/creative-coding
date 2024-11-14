@@ -1,85 +1,52 @@
-
 function setup() {
-
-  // create the canvas
+  // Create the canvas
   createCanvas(1000, 1000);
   
-}
+  // Draw the hills immediately
+  let sky = color(3, 21, 48);
+  let treeLine = color(3, 38, 2);
+  let ground = color(26, 16, 1);
 
-//translate(50, 50);
-//rect(0,0,300,300);
-//let from = color
-//let to = color
-//for (let x = 0; x < 300; x++) {
-//let fill_color = lerpColor(from, to ,x/300);
+  // Drawing hills
+  let noiseLevels = [200, 500, 100]; // Noise levels for each hill
+  let noiseScales = [0.0001, 0.01, 0.003]; // Noise scales for each hill
+  let hillColors = [sky, treeLine, ground]; // Colors for each hill
 
-//fill(fill_color);  
-//rect(0,x,300,1)
-//}
-function draw() {
+  // Loop through the hills
+  for (let i = 0; i < noiseLevels.length; i++) {
+    for (let x = 0; x < width; x++) {
+      let nx = noiseScales[i] * x; // Calculate noise based on x position
+      let y = noiseLevels[i] * noise(nx); // Get the noise value
 
-  //creating a interpolate color
- let from = color("white");
- let to = color("black");
+      // Set the stroke color for the current hill
+      stroke(hillColors[i]);
 
-//creating intermediate colors
- let interA = lerpColor(from, to, 0.25);
- let interB = lerpColor(from, to, 0.50);
- let interC = lerpColor(from, to, 0.75);
+      // Draw the hill lines
+      if (i == 0) {
+        line(x, 0, x, y + 500); // For hill #1
+      } else if (i == 1) {
+        line(x, 1000, x, y); // For hill #2
+      } else if (i == 2) {
+        line(x, y + 700, x, 1000); // For hill #3
+      }
+    }
+  }
 
-  let treeX = random(10,950);
-  let treeX2 = random(30, 100);
-  treeX2 = treeX2 + treeX;
-  let treeY = 300
-  let treeY2 = random(380,500);
+  // Draw tall skinny rectangles once during setup
+  for (let i = 0; i < 5; i++) { // Draw exactly 3 rectangles
+    let rectWidth = random(30, 75); // Random width
+    let rectHeight = random(375, 600); // Random height
+    let xPos = random(width); // Random x position
+    let yPos = 800; // Fixed position at the bottom
 
-//drawing hill #1
- let noiseLevel = 200;
-  let noiseScale = 0.0001;
-
- 
-  let x = frameCount;
-  let nx = noiseScale * x;
-
-
-  let y = noiseLevel * noise(nx);
-  stroke("black");
-  line(x, 0, x, y+500); 
-
-  //drawing trees
-  srtoke(67, 51, 8);
-  fill(67, 51, 8); // tree brown
-  rect(treeX,treeY,treeX2,treeY2); // trunk
-
-
-
-  //drawing hill #2
-  let noiseLevel2 = 100;
-  let noiseScale2 = 0.005;
-
- 
-  let x2 = frameCount;
-  let nx2 = noiseScale2 * x2;
-
-
-  let y2 = noiseLevel2 * noise(nx2);
-
- 
-
-  stroke(interC);
-  line(x2, 1000, x2, y2+200);
-
-  //drawing hill #3
-  let noiseLevel3 = 100;
-  let noiseScale3 = 0.003;
-
- 
-  let x3 = frameCount;
-  let nx3 = noiseScale3 * x3;
-
-
-  let y3 = noiseLevel3 * noise(nx3);
-  stroke(interB);
-  line(x3, y3+700, x3, 1000);
+    fill(26, 16, 1); // Fill color
+    stroke(26, 16, 1); // Stroke color
+    rect(xPos, rectHeight, rectWidth, 900); // Draw the rectangle
+  }
+  fill("white");
+  stroke("brown");
+  triangle(800, 780, 845, 670, 905, 790);
 
 }
+
+
