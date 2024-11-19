@@ -22,7 +22,7 @@ let grammar = tracery.createGrammar({
     "place": [
         "IN A DESERT",
         "IN A FOREST",
-        "A CITY",
+        "IN A CITY",
         "NEAR AN ABANDONED CEMETARY",
         "SURROUNDED BY A GARDEN",
         "ON A SHORE",
