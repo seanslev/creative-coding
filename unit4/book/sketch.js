@@ -28,7 +28,7 @@ function setup() {
     let newText = "";
     // use random() to specify the minimum and maximum
     // paragraphs per chapter
-    for (let p = 0; p < random(30,60); p++ ){
+    for (let p = 0; p < random(35,60); p++ ){
      
       // generate a random number of sentences, using
       // random() to dictate min and max sentences
@@ -41,7 +41,7 @@ function setup() {
    
     c++;
   }
-  while (c < 10); // the number of chapters to generate.
+  while (c < 50); // the number of chapters to generate.
     
   // call the polyfill rendering
   window.PagedPolyfill.preview();
