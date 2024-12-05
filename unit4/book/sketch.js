@@ -24,11 +24,11 @@ function setup() {
   do {
     
     // create chapter titles from single sentences.
-    content.child( createElement("h2","Chapter " + c + ": " + mv.generate(1)));
+    content.child( createElement("h2", ": " + mv.generate(1)));
     let newText = "";
     // use random() to specify the minimum and maximum
     // paragraphs per chapter
-    for (let p = 0; p < random(12,60); p++ ){
+    for (let p = 0; p < random(30,60); p++ ){
      
       // generate a random number of sentences, using
       // random() to dictate min and max sentences
@@ -41,7 +41,7 @@ function setup() {
    
     c++;
   }
-  while (c < 5); // the number of chapters to generate.
+  while (c < 10); // the number of chapters to generate.
     
   // call the polyfill rendering
   window.PagedPolyfill.preview();
