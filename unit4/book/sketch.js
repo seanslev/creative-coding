@@ -1,7 +1,7 @@
 let lines, fullText, mv,c,wc;
 
 function preload() {
-  lines = loadStrings("https://seanslev.github.io/creative-coding/week4/book/TEXT.txt");
+  lines = loadStrings("garden.txt");
 }
 
 function setup() {
