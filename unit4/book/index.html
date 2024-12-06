@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- I used the markov example to create my generated book with the script of "The Secret Garden" 
+    the text uses lots of interesting poetry and quotes
+    I attempted to make this book look very fancy and expensive with its margins and bleed.
+    -->
+
     <meta charset="utf-8">
     <!-- p5.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
@@ -8,23 +13,19 @@
     <!-- including rita -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rita/2.8.31/rita.js" integrity="sha512-IGhGQtL9ApCRosCUaAuSlsUBrNeJpvviwzFyXvUFU/NpAudeKEvan5KIMC0QF3aT3Dp1/cGXHq936bpd8IVu7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- include the Paged.js polyfill -->
+    <!-- including Paged.js polyfill -->
     <script defer src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
     <script>
         // disable automatic rendering
         window.PagedConfig = {auto: false};
     </script>
     
-    <!-- include the interface.css -->
-    <!-- this code will reference my copy, but you should use your own, ideally. -->
+    <!-- including the interface.css -->
     <link href="https://zachwhalen.github.io/creative-coding/unit4/book/interface.css" rel="stylesheet" type="text/css" />
 
 
     <title>Book</title> 
-    <!--
-        Use this page to complete the "Book" project:
-        https://canvas.umw.edu/courses/1498218/assignments/11723294
-    -->  
+   
 
     <style type="text/css">
         @media print{
