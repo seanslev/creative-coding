@@ -5,7 +5,7 @@ function setup() {
   // Draw the hills immediately
   let sky = color(3, 21, 48);
   let treeLine = color(3, 38, 2);
-  let ground = color("brown");
+  let ground = color(26, 16, 1);
 
   // Drawing hills
   let noiseLevels = [200, 500, 100]; // Noise levels for each hill
@@ -39,8 +39,8 @@ function setup() {
     let xPos = random(width); // Random x position
     let yPos = 800; // Fixed position at the bottom
 
-    fill("brown"); // Fill color
-    stroke("brown"); // Stroke color
+    fill(26, 16, 1); // Fill color
+    stroke(26, 16, 1); // Stroke color
     strokeWeight(random(30,60));
     line(xPos, rectHeight, xPos, 900); // Draw the rectangle
   }
