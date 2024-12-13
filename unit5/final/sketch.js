@@ -56,6 +56,8 @@ function setup() {
   let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 2.5 }); //left paddle
   let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 2.5 }); //right paddle
 
+//I USE GENERATIVE AI FOR THIS PORTION OF CODE v (down)
+
   //create hinge constraint for paddle1 (left paddle) at its leftmost end
   let hinge1 = Constraint.create({
     pointA: { x: width / 2 - 125, y: height - 100 }, //attach hinge to the left side of paddle1
@@ -73,6 +75,8 @@ function setup() {
     stiffness: 1,
     damping: 0.1
   });
+
+//I USED GENERATIVE AI FOR THIS PORTION OF CODE ^ (up)
 
   //using a array to add paddles with world
   World.add(world, [paddle1, paddle2]);

@@ -20,9 +20,27 @@
 
         canvas {
             display: block;
-            box-shadow: none; /* Ensure no shadow is under the canvas */
+            box-shadow: none; /*ensure no shadow is under the canvas */
         }
     </style>
+    <!--
+            For my project I was aiming to create a pinball machine, with similar mechanics and looks as one you would find in a arcade like dave and busters. I decided to use a simple pallete for my colors and shapes, I came out with a pac man like look that I really enjoy. I used matter.js to simulate gravity, matter.js was a diffiult extension to grasp but with a few youtube videos I was able to figure out its mechanics to the best of my ability. With the difficulty of adding matter.js to the program, I have also found it extremely rewarding when I succesfully implement certain functions
+
+            https://youtu.be/LYUXTQDN7X0?si=Rtl8S7oW1DKO8ARp
+            https://youtu.be/urR596FsU68?si=UDBa_0wIeZYAAuIc
+            this particular video helped me lots with creating bodies
+
+            Explaining, I used bumpers, paddles, and vertice/walls 
+            each respectively being bouncers, hitters, and borders for the ball itself
+            the goal is to use the paddles by clicking the mouse to hit the ball into blue holes giving you points and seeing how many points you can aqcuire
+            I found swinging the paddles to be extremely difficult and I had to have co pilot to assist me with creating hinges that stay stacking for the paddles.
+            originally without its help, i had the paddles rotate on a axis in the center of the paddle, which was not what I wanted my project to display.
+
+            I was motivated to attemp a pin ball machine because when you introduced matter.js I started theorizing what i could do inside the program. Pin ball machines are very visually appealing to me and also hold some resonance. I had a pinball machine in my birth home in Clevland Ohio. The machine had to be sold since we moved when I was young. for my project I wish I tried to make small paths the ball could follow that would rack up points for you, but I had to do a simpler approach. one thing I would have change, is trying to make it more visually appearing giveing it flashing lights and maybe noises when you aqcuire points, just like in a arcade game.
+
+            I believe I took my own creative liberty with this, as I have not seen a pin ball machine game like it. I like the art style of certain black and rbg color games for example TOMB OF THE MASK on mobile
+            I tried my absolute best to make a realistic flick from a pinball machine, but it did not end up exactly how I wanted. I hope maybe different more experienced coders would be able to percieve my code and vision and expand on it. I had a lot of enjoyment completing the project and it was very gratifying when completed
+    -->
 
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
