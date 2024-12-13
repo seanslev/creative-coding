@@ -1,6 +1,6 @@
-// Matter.js module aliases
+//matter.js module names
 const { Engine, Render, World, Bodies, Body, Vector, Events, Constraint } = Matter;
-
+//arrays and setting variable
 let engine;
 let world;
 let ball;
@@ -8,37 +8,37 @@ let paddles = [];
 let bumpers = [];
 let walls = [];
 let slants = [];
-let holes = []; // Array to store holes
+let holes = []; 
 let gameOver = false;
 let score = 0;
 let highScore = 0;
 
-let gameOverZoneRadius = 40; // Smaller game over zone radius
+let gameOverZoneRadius = 40; //variable to call when game over
 
 function setup() {
   createCanvas(800, 850);
 
-  // Create the Matter.js engine and world
+  //matter.js engine and world creation
   engine = Engine.create();
   world = engine.world;
 
-  // Create the ball and position it above the paddles (e.g., 200px above)
+  //create the ball positioned slightly left of the center
   ball = Bodies.circle(width / 4, height / 2, 20, {
-    restitution: 1.2, // Makes the ball extra bouncy
-    frictionAir: 0.01, // Slight air friction to slow it down
+    restitution: 1.2, //restitution is "bounciness"
+    frictionAir: 0.01, //slows ball down in air
   });
   World.add(world, ball);
 
-  // Create walls
-  walls.push(Bodies.rectangle(width / 2, 0, width, 10, { isStatic: true })); // Top wall
-  walls.push(Bodies.rectangle(width / 2, height, width, 10, { isStatic: true })); // Bottom wall
-  walls.push(Bodies.rectangle(0, height / 2, 10, height, { isStatic: true })); // Left wall
-  walls.push(Bodies.rectangle(width, height / 2, 10, height, { isStatic: true })); // Right wall
+  //pushing walls
+  walls.push(Bodies.rectangle(width / 2, 0, width, 10, { isStatic: true })); //top wall
+  walls.push(Bodies.rectangle(width / 2, height, width, 10, { isStatic: true })); //bottom wall
+  walls.push(Bodies.rectangle(0, height / 2, 10, height, { isStatic: true })); //left wall
+  walls.push(Bodies.rectangle(width, height / 2, 10, height, { isStatic: true })); //right wall
 
-  // Add the walls to the world
+  
   World.add(world, walls);
 
-  // Create fixed bumpers at specific locations with higher restitution
+  //pushing fixed bumpers at specific locations with higher restitution, simulates bumpers in pin ball
   bumpers.push(Bodies.circle(300, 200, 30, { isStatic: true, restitution: 2 }));
   bumpers.push(Bodies.circle(500, 200, 30, { isStatic: true, restitution: 2 }));
   bumpers.push(Bodies.circle(400, 400, 30, { isStatic: true, restitution: 2 }));
@@ -49,93 +49,93 @@ function setup() {
   bumpers.push(Bodies.circle(130, 500, 30, { isStatic: true, restitution: 3 }));
   bumpers.push(Bodies.circle(670, 500, 30, { isStatic: true, restitution: 3 }));
 
-  // Add bumpers to the world
+  
   World.add(world, bumpers);
 
-  // Create paddles with a gap between them (100px apart)
-  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 2.5 }); // Left paddle
-  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 2.5 }); // Right paddle
+  //create paddle variables so I can call them while mouse click
+  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 2.5 }); //left paddle
+  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 2.5 }); //right paddle
 
-  // Create hinge constraint for paddle1 (left paddle) at its leftmost end
+  //create hinge constraint for paddle1 (left paddle) at its leftmost end
   let hinge1 = Constraint.create({
-    pointA: { x: width / 2 - 125, y: height - 100 }, // Attach hinge to the left side of paddle1
+    pointA: { x: width / 2 - 125, y: height - 100 }, //attach hinge to the left side of paddle1
     bodyB: paddle1,
-    pointB: { x: -50, y: 0 }, // Relative to the paddle's center
+    pointB: { x: -50, y: 0 },
     stiffness: 1,
     damping: 0.1
   });
 
-  // Create hinge constraint for paddle2 (right paddle) at its rightmost end
+  //create hinge constraint for paddle2 (right paddle) at its rightmost end
   let hinge2 = Constraint.create({
-    pointA: { x: width / 2 + 125, y: height - 100 }, // Attach hinge to the right side of paddle2
+    pointA: { x: width / 2 + 125, y: height - 100 }, //attach hinge to the right side of paddle2
     bodyB: paddle2,
-    pointB: { x: 50, y: 0 }, // Relative to the paddle's center
+    pointB: { x: 50, y: 0 }, 
     stiffness: 1,
     damping: 0.1
   });
 
-  // Add paddles to the world
+  //using a array to add paddles with world
   World.add(world, [paddle1, paddle2]);
 
-  // Add the hinge constraints to the world
+  //add the hinge constraints to the world the same
   World.add(world, [hinge1, hinge2]);
 
-  // Store the paddles in an array for easy access
+  //the paddles in an array for easy access
   paddles.push(paddle1, paddle2);
 
-  // Create slanted barriers in the corners using fromVertices
+  //creating slants for the ball slowly fall into hole
   slants.push(Bodies.fromVertices(0, height, [
     { x: 0, y: height },
     { x: 1000, y: height },
     { x: 0, y: height - 1000 }
-  ], { isStatic: true }));  // Bottom-left corner
+  ], { isStatic: true }));  //bottom-left corner
 
   slants.push(Bodies.fromVertices(width, height, [
     { x: width, y: height },
     { x: width - 1000, y: height },
     { x: width, y: height - 1000 }
-  ], { isStatic: true }));  // Bottom-right corner
-
+  ], { isStatic: true }));  //bottom-right corner
+//these two are for design purposes
   slants.push(Bodies.fromVertices(0, 0, [
     { x: 0, y: 0 },
     { x: 100, y: 100 },
     { x: 0, y: 100 }
-  ], { isStatic: true }));  // Top-left corner
+  ], { isStatic: true }));  //top-left corner
 
   slants.push(Bodies.fromVertices(width, 0, [
     { x: width, y: 0 },
     { x: width - 100, y: 100 },
     { x: width, y: 100 }
-  ], { isStatic: true }));  // Top-right corner
+  ], { isStatic: true }));  //top-right corner
 
-  // Add slants to the world
+  //slants adding
   World.add(world, slants);
 
-  // Create initial holes at specific positions
+  //creating holes at with calling
   spawnHole();
   spawnHole();
 
-  // Run the engine
+  //run the engine
   Engine.run(engine);
 }
 
 function draw() {
   background(0);
 
-  // Update the Matter.js engine
+  //updating for engine to render stuff
   Engine.update(engine);
 
-  // Check for "Game Over" (ball falls into the center hole)
-  let ballDistance = dist(ball.position.x, ball.position.y, width / 2, height - 50); // Hole center at bottom center
+  //check for "Game Over" (ball falls into the center hole)
+  let ballDistance = dist(ball.position.x, ball.position.y, width / 2, height - 50); //hole center at bottom center
   if (ballDistance < gameOverZoneRadius) {
     gameOver = true;
 
-    // Freeze the ball in place
+    //freezing the ball during game over
     Body.setVelocity(ball, { x: 0, y: 0 });
     Body.setAngularVelocity(ball, 0);
     Body.setStatic(ball, true);
 
-    // Display game over text
+    //displaying game over
     textSize(64);
     fill(255, 0, 0);
     textAlign(CENTER, CENTER);
@@ -144,34 +144,34 @@ function draw() {
     text("Restart browser to play again", width / 2, height / 2 + 50);
   }
 
-  // Display the ball
+  //ball creation
   fill(255);
   noStroke();
   ellipse(ball.position.x, ball.position.y, 40, 40);
 
-  // Display the bumpers
+  //display the bumpers
   for (let bumper of bumpers) {
     fill(255, 0, 0);
     ellipse(bumper.position.x, bumper.position.y, 60, 60);
   }
 
-  fill(0, 0, 255); // Blue color for the walls
-  for (let wall of walls) {
+  fill(0, 0, 255); //blue color for the walls
+  for (let wall of walls) { //WALLS DISPLAYED
     rectMode(CENTER);
     rect(wall.position.x, wall.position.y, wall.bounds.max.x - wall.bounds.min.x, wall.bounds.max.y - wall.bounds.min.y);
   }
 
-  // Display blue slanted barriers (vertices)
+  // display blue slanted barriers (vertices) with a transparency for looks
   fill(0, 0, 255, 100); //blue for the slants
   for (let slant of slants) {
     beginShape();
     for (let vertexObj of slant.vertices) {
-      vertex(vertexObj.x, vertexObj.y); // Correctly access the x and y of each vertex
+      vertex(vertexObj.x, vertexObj.y); 
     }
     endShape(CLOSE);
   }
 
-  // Display paddles with the updated gap
+  //display paddles with a rotate function, so the paddles can swing
   for (let paddle of paddles) {
     fill(0, 255, 0);
     rectMode(CENTER);
@@ -187,72 +187,72 @@ function draw() {
     let hole = holes[i];
     let distance = dist(ball.position.x, ball.position.y, hole.x, hole.y);
     if (distance < hole.radius) {
-      // Remove the collected hole
+      //remove the collected hole when touched
       holes.splice(i, 1);
-      // Increment the score
+      //changes score
       score += 10;
-      // Spawn a new hole
+      //spawn a new hole after
       spawnHole();
     }
   }
 
-  // Display holes
-  fill(0, 0, 255); // Blue color for holes
+  //display holes
+  fill(0, 0, 255); // Blue
   noStroke();
   for (let hole of holes) {
     ellipse(hole.x, hole.y, hole.radius * 2);
   }
 
-  // Display score
+  //display score
   fill(255);
   textSize(32);
   textAlign(LEFT, TOP);
-  text('Score: ' + score, 20, 20);
+  text('Score: ' + score, 20, 20); //updates score constantky
 
-  // Display game over zone
-  noFill();
+  //display game over zone
+  fill(255, 0, 0, 100);
   stroke(255, 0, 0, 100);
-  ellipse(width / 2, height - 40, gameOverZoneRadius * 2, gameOverZoneRadius * 2); // Transparent red zone
+  ellipse(width / 2, height - 40, gameOverZoneRadius * 2, gameOverZoneRadius * 2); //transparent red zone
 }
 
-// Flick paddle behavior on mouse press and release
+//flick paddle behavior on mouse press and release
 function mousePressed() {
-  // Disable inputs if the game is over
+  //disable inputs if the game is over
   if (gameOver) {
     return;
   }
 
-  // Determine which paddle to flick based on mouse position
+  //determining which paddle to flick based on mouse position
   let flickingPaddle = mouseX < width / 2 ? paddles[0] : paddles[1]; // Left or right paddle
 
-  // Apply torque to flick the selected paddle
+  //apply "torque" to flick the selected paddle
   if (flickingPaddle) {
-    let torque = mouseX < width / 2 ? -0.2 : 0.2; // Determine torque direction
-    Body.setAngularVelocity(flickingPaddle, torque); // Flick the paddle
+    let torque = mouseX < width / 2 ? -0.2 : 0.2; //torque direction
+    Body.setAngularVelocity(flickingPaddle, torque); // THE FLICK
   }
 }
 
 function mouseReleased() {
-  // Disable inputs if the game is over
+  //disable inputs if the game is over
   if (gameOver) {
     return;
   }
 
-  // Stop the paddles' motion and reset their angular velocity
+  //stop the paddles motion and reset their angular velocity
   for (let paddle of paddles) {
-    Body.setAngularVelocity(paddle, 0); // Stop rotation
-    Body.setAngle(paddle, 0); // Reset paddle angle to original position
+    Body.setAngularVelocity(paddle, 0); //stop rotation
+    Body.setAngle(paddle, 0); //reset paddle angle to original position when mouse not clicked
   }
 }
 
 function spawnHole() {
-  // Ensure the new hole doesn't overlap existing holes or the ball
+  //ensure the new hole doesn't overlap existing holes or the ball
   let newHole;
   let validHole = false;
   while (!validHole) {
     newHole = {
       x: random(100, width - 100),
-      y: random(100, height - 100),
+      y: random(100, height - 300),//makes hole spawn above the game over zone
       radius: 30
     };
     validHole = holes.every(hole => dist(newHole.x, newHole.y, hole.x, hole.y) > hole.radius * 2) &&
