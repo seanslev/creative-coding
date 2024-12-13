@@ -8,16 +8,14 @@ let paddles = [];
 let bumpers = [];
 let walls = [];
 let slants = [];
-let flickingPaddle = null;
-let paddleForce = 0.15;  // Force for flicking paddles
-let gravity = 0.5;  // Gravity for paddles
+let holes = []; // Array to store holes
 let gameOver = false;
 let score = 0;
 let highScore = 0;
 
 let retryButton;
 
-let gameOverZoneRadius = 50;  // Smaller game over zone radius
+let gameOverZoneRadius = 50; // Smaller game over zone radius
 
 function setup() {
   createCanvas(800, 850);
@@ -29,8 +27,8 @@ function setup() {
   engine = Engine.create();
   world = engine.world;
 
-  // Create the ball
-  ball = Bodies.circle(width / 2, height / 2, 20, {
+  // Create the ball and position it above the paddles (e.g., 200px above)
+  ball = Bodies.circle(width / 2, height - 150, 20, {
     restitution: 1.2, // Makes the ball extra bouncy
     frictionAir: 0.01, // Slight air friction to slow it down
   });
@@ -56,28 +54,28 @@ function setup() {
   World.add(world, bumpers);
 
   // Create paddles with a gap between them (100px apart)
-  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 1.5 });
-  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 1.5 });
+  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 0 }); // Set restitution to 0
+  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 0 }); // Set restitution to 0
 
-  // Add paddles to the world
-  World.add(world, [paddle1, paddle2]);
-
-  // Create revolute constraints (hinges) for paddles, attach to far end
+  // Create hinge constraints only at one end of each paddle (left side for paddle1, right side for paddle2)
   let hinge1 = Constraint.create({
-    pointA: { x: width / 2 - 75 - 50, y: height - 100 },  // Attach hinge to far end (left side)
+    pointA: { x: width / 2 - 75 - 50, y: height - 100 },  // Attach hinge to the left side of paddle1
     bodyB: paddle1,
     stiffness: 1,
     damping: 0.1
   });
 
   let hinge2 = Constraint.create({
-    pointA: { x: width / 2 + 75 + 50, y: height - 100 },  // Attach hinge to far end (right side)
+    pointA: { x: width / 2 + 75 + 50, y: height - 100 },  // Attach hinge to the right side of paddle2
     bodyB: paddle2,
     stiffness: 1,
     damping: 0.1
   });
 
-  // Add the constraints to the world
+  // Add paddles to the world
+  World.add(world, [paddle1, paddle2]);
+
+  // Add the hinge constraints to the world
   World.add(world, [hinge1, hinge2]);
 
   // Store the paddles in an array for easy access
@@ -111,18 +109,9 @@ function setup() {
   // Add slants to the world
   World.add(world, slants);
 
-  // Setup Matter.js renderer (optional, but helpful for debugging)
-  const render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-      width: width,
-      height: height,
-      wireframes: false, // Use real visuals instead of wireframes
-    },
-  });
-
-  Render.run(render);
+  // Create holes at specific positions
+  holes.push({ x: 200, y: 300, radius: 30 });
+  holes.push({ x: 600, y: 500, radius: 30 });
 
   // Run the engine
   Engine.run(engine);
@@ -179,6 +168,23 @@ function draw() {
     translate(-paddle.position.x, -paddle.position.y); // Undo the translation
   }
 
+  // Display holes
+  fill(0, 0, 255); // Blue color for holes
+  noStroke();
+  for (let hole of holes) {
+    ellipse(hole.x, hole.y, hole.radius * 2);
+  }
+
+  // Check if the ball is in a hole
+  for (let hole of holes) {
+    let distance = dist(ball.position.x, ball.position.y, hole.x, hole.y);
+    if (distance < hole.radius) {
+      score += 10; // Increment score
+      resetBall(); // Reset ball position
+      break; // Avoid multiple triggers
+    }
+  }
+
   // Display score
   fill(255);
   textSize(32);
@@ -221,27 +227,41 @@ function mousePressed() {
     return;
   }
 
-  // Apply upward force to the paddles on mouse press
-  for (let paddle of paddles) {
-      Matter.Body.applyForce(paddle, paddle.position, { x: 0, y: -paddleForce });
-    }
-}
+  // Determine which paddle to flick based on mouse position
+  if (mouseX < width / 2) {
+    flickingPaddle = paddles[0]; // Left paddle
+  } else {
+    flickingPaddle = paddles[1]; // Right paddle
+  }
 
+  // Apply torque to flick the selected paddle
+  if (flickingPaddle) {
+    let torque = mouseX < width / 2 ? -paddleForce : paddleForce; // Determine torque direction
+    Body.setAngularVelocity(flickingPaddle, torque); // Flick the paddle
+  }
+}
 
 function mouseReleased() {
   // Disable inputs if the game is over
   if (gameOver) {
     return;
   }
-  // Reset paddle flicking
-  flickingPaddle = null;
+
+  // Stop the paddle's motion and reset its angular velocity
+  if (flickingPaddle) {
+    Body.setAngularVelocity(flickingPaddle, 0); // Stop rotation
+    Body.setAngle(flickingPaddle, 0); // Reset paddle angle to original position
+  }
+
+  flickingPaddle = null; // Clear the flicking paddle
 }
+
 
 // Restart the game
 function restartGame() {
   score = 0;
   gameOver = false;
   retryButton.hide();  // Hide retry button
-  ball.position = { x: width / 2, y: height / 2 };  // Reset ball position
+  ball.position = { x: width / 2, y: height - 150 };  // Reset ball position above the paddles
   Matter.Body.setVelocity(ball, { x: 0, y: 0 });  // Reset velocity
 }

@@ -3,9 +3,16 @@ function setup() {
   createCanvas(1000, 1000);
   
   // Draw the hills immediately
-  let sky = color(3, 21, 48);
-  let treeLine = color(3, 38, 2);
-  let ground = color(26, 16, 1);
+  let r = random(150);
+  let b = random(150);
+  let g = random(150);
+  let black = color(0);
+  let white = color(255);
+  let sky = color(r,b,g);
+  let light = lerpColor(sky, white, 0.2);
+  let treeLine = lerpColor(sky, black, 0.2);
+  let ground = lerpColor(treeLine, black, 0.2);
+  let pole = lerpColor(ground, black, 0.2);
 
   // Drawing hills
   let noiseLevels = [200, 500, 100]; // Noise levels for each hill
@@ -33,22 +40,24 @@ function setup() {
   }
 
   // Draw tall skinny rectangles once during setup
-  for (let i = 0; i < 5; i++) { // Draw exactly 3 rectangles
-    let rectWidth = random(30, 75); // Random width
-    let rectHeight = random(375, 600); // Random height
-    let xPos = random(width); // Random x position
-    let yPos = 800; // Fixed position at the bottom
-
-    fill(26, 16, 1); // Fill color
-    stroke(26, 16, 1); // Stroke color
-    strokeWeight(random(30,60));
-    line(xPos, rectHeight, xPos, 900); // Draw the rectangle
-  }
+  
   fill("white");
-  stroke("brown");
   strokeWeight("1");
   triangle(800, 780, 845, 670, 905, 790);
+  fill("gray");
+  circle(850,768,30);
+  fill(r, b, g, 100);
+  noStroke();
+  circle( 850, 730, 200);
+  circle(200, 650, 200);
+  fill(pole);
+  rect(190, 610, 20, 190);
+  fill(light);
+  stroke(ground);
+  rect(180, 630, 40, 50);
+
 
 }
+
 
 
