@@ -1,27 +1,107 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>A Webpage</title> 
+    <title>Portfolio</title> 
+
+    <style type="text/css">
+    p2{
+      padding-top: 50px;
+    }
+  h1{ 
+  text-align: center;
+  font-size: 50px;
+  color: white;
+  font-family: minecraft;
+  src: url(minecraft.otf);
+  padding-bottom: 50px;
+  }
+
+  div{
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-family:minecraft;
+
+  }
+  body{
+  background-color: darkslategray;
+  }
+  
+  img{
+    width: 500px;
+    height:400px;
+  }
+        
+    </style>
+  
 </head>
 <body>
-        <p id="ransom-note"></p>
+  
+    <div>
+        <h1>  
+          Sean Slevin
+    </h1>
 
-  <script>
-    const text = "Hello World";
-    const colors = ["red", "blue", "green", "purple", "orange"];
-    const fonts = ["Arial", "Courier New", "Georgia", "Times New Roman", "Verdana"];
+    <p1 >
+      Hello!, my name is Sean and I am a computer science student at the University of Mary Washington.
+      <br>
+      <br>
+      v Below are some of my favorite projects from the course Creative Coding v
+      <hr>
+    </p1>
+
+    <p2>
+
+    <h1 style="font-size: 40px;">
+      !Pinball Machine!
+    </h1>
+    <img src="pinball.png">  
+    <br>
+    This is a image from my final project.
+    <br>
+    I made a pinball machine game because I have sentement with the object, and wanted to display it artisticly and functionially in my code.
+    <a  href="https://seanslev.github.io/creative-coding/unit5/final/index.html"></a>
     
-    const ransomNote = document.getElementById("ransom-note");
+    </p2>
 
-    for (let char of text) {
-      const span = document.createElement("span");
-      span.textContent = char;
-      span.className = "ransom-letter";
-      span.style.color = colors[Math.floor(Math.random() * colors.length)];
-      span.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
-      ransomNote.appendChild(span);
-    }
-    </script>  
+    <h1 style="font-size: 40px;">
+      !Generated Cave!
+    </h1>
+    <img src="landscape.png"> 
+    <br>
+    This is a gif from a project I made in my creative coding class.
+    <br>
+    This was really fun to make, I love generating cool stuff and I liked learning how to do this.
+    <a  href="https://seanslev.github.io/creative-coding/unit2/landscape/index.html"></a>
+    
+    </p2>
+
+    <h1 style="font-size: 40px;">
+      Binary Grid
+    </h1>
+    <img src="GridAnimation.gif">  
+    <br>
+    This is a gif from a project I made in my creative coding class.
+    <br>
+    This is a random grid generator, I tried to do something that looked matrix-y.
+    <a  href="https://seanslev.github.io/creative-coding/unit2/2.2.grid/index.html"></a>
+    
+    </p2>
+
+    <h1 style="font-size: 40px;">
+      !Seasons of a Tree Hourly!
+    </h1>
+    <img src="time.png">  
+    <br>
+    This is a Gif from a project I made in creative coding class.
+    <br>
+    The tree is animated in real time, hourly changing the sunset. Every six hours it changes seasons!
+    <br>
+    <a  href="https://seanslev.github.io/creative-coding/unit3/time/index.html"></a>
+    
+    </p2>
+    </div>  
 </body>
 </html> 
