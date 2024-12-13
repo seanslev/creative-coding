@@ -13,7 +13,7 @@ let gameOver = false;
 let score = 0;
 let highScore = 0;
 
-let gameOverZoneRadius = 50; // Smaller game over zone radius
+let gameOverZoneRadius = 40; // Smaller game over zone radius
 
 function setup() {
   createCanvas(800, 850);
@@ -42,17 +42,19 @@ function setup() {
   bumpers.push(Bodies.circle(300, 200, 30, { isStatic: true, restitution: 2 }));
   bumpers.push(Bodies.circle(500, 200, 30, { isStatic: true, restitution: 2 }));
   bumpers.push(Bodies.circle(400, 400, 30, { isStatic: true, restitution: 2 }));
-  bumpers.push(Bodies.circle(220, 700, 30, { isStatic: true, restitution: 3 }));
-  bumpers.push(Bodies.circle(580, 700, 30, { isStatic: true, restitution: 3 }));
-  bumpers.push(Bodies.circle(180, 700, 30, { isStatic: true, restitution: 3 }));
-  bumpers.push(Bodies.circle(620, 700, 30, { isStatic: true, restitution: 3 }));
+  bumpers.push(Bodies.circle(220, 710, 30, { isStatic: true, restitution: 3 }));
+  bumpers.push(Bodies.circle(580, 710, 30, { isStatic: true, restitution: 3 }));
+  bumpers.push(Bodies.circle(170, 700, 30, { isStatic: true, restitution: 3 }));
+  bumpers.push(Bodies.circle(630, 700, 30, { isStatic: true, restitution: 3 }));
+  bumpers.push(Bodies.circle(130, 500, 30, { isStatic: true, restitution: 3 }));
+  bumpers.push(Bodies.circle(670, 500, 30, { isStatic: true, restitution: 3 }));
 
   // Add bumpers to the world
   World.add(world, bumpers);
 
   // Create paddles with a gap between them (100px apart)
-  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 3 }); // Left paddle
-  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 3 }); // Right paddle
+  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 2.5 }); // Left paddle
+  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 2.5 }); // Right paddle
 
   // Create hinge constraint for paddle1 (left paddle) at its leftmost end
   let hinge1 = Constraint.create({
@@ -109,9 +111,9 @@ function setup() {
   // Add slants to the world
   World.add(world, slants);
 
-  // Create holes at specific positions
-  holes.push({ x: 200, y: 300, radius: 30 });
-  holes.push({ x: 600, y: 500, radius: 30 });
+  // Create initial holes at specific positions
+  spawnHole();
+  spawnHole();
 
   // Run the engine
   Engine.run(engine);
@@ -122,6 +124,25 @@ function draw() {
 
   // Update the Matter.js engine
   Engine.update(engine);
+
+  // Check for "Game Over" (ball falls into the center hole)
+  let ballDistance = dist(ball.position.x, ball.position.y, width / 2, height - 50); // Hole center at bottom center
+  if (ballDistance < gameOverZoneRadius) {
+    gameOver = true;
+
+    // Freeze the ball in place
+    Body.setVelocity(ball, { x: 0, y: 0 });
+    Body.setAngularVelocity(ball, 0);
+    Body.setStatic(ball, true);
+
+    // Display game over text
+    textSize(64);
+    fill(255, 0, 0);
+    textAlign(CENTER, CENTER);
+    text("GAME OVER", width / 2, height / 2);
+    textSize(32);
+    text("Restart browser to play again", width / 2, height / 2 + 50);
+  }
 
   // Display the ball
   fill(255);
@@ -141,7 +162,7 @@ function draw() {
   }
 
   // Display blue slanted barriers (vertices)
-  fill(0, 0, 255, 100); // Semi-transparent blue for the slants
+  fill(0, 0, 255, 100); //blue for the slants
   for (let slant of slants) {
     beginShape();
     for (let vertexObj of slant.vertices) {
@@ -161,6 +182,20 @@ function draw() {
     pop();
   }
 
+  // Check if the ball enters any hole
+  for (let i = holes.length - 1; i >= 0; i--) {
+    let hole = holes[i];
+    let distance = dist(ball.position.x, ball.position.y, hole.x, hole.y);
+    if (distance < hole.radius) {
+      // Remove the collected hole
+      holes.splice(i, 1);
+      // Increment the score
+      score += 10;
+      // Spawn a new hole
+      spawnHole();
+    }
+  }
+
   // Display holes
   fill(0, 0, 255); // Blue color for holes
   noStroke();
@@ -177,21 +212,7 @@ function draw() {
   // Display game over zone
   noFill();
   stroke(255, 0, 0, 100);
-  ellipse(width / 2, height - 50, gameOverZoneRadius * 2, gameOverZoneRadius * 2); // Transparent red zone
-
-  // Check for "Game Over" (ball falls into the center hole)
-  let ballDistance = dist(ball.position.x, ball.position.y, width / 2, height - 50); // Hole center at bottom center
-  if (ballDistance < gameOverZoneRadius) {
-    gameOver = true;
-    // Update the high score if needed
-    
-    textSize(64);
-    fill(255, 0, 0);
-    textAlign(CENTER, CENTER);
-    text("GAME OVER", width / 2, height / 2);
-    textSize(32);
-    text("Restart browser to play again", width / 2, height / 2 + 50);
-  }
+  ellipse(width / 2, height - 40, gameOverZoneRadius * 2, gameOverZoneRadius * 2); // Transparent red zone
 }
 
 // Flick paddle behavior on mouse press and release
@@ -222,4 +243,20 @@ function mouseReleased() {
     Body.setAngularVelocity(paddle, 0); // Stop rotation
     Body.setAngle(paddle, 0); // Reset paddle angle to original position
   }
+}
+
+function spawnHole() {
+  // Ensure the new hole doesn't overlap existing holes or the ball
+  let newHole;
+  let validHole = false;
+  while (!validHole) {
+    newHole = {
+      x: random(100, width - 100),
+      y: random(100, height - 100),
+      radius: 30
+    };
+    validHole = holes.every(hole => dist(newHole.x, newHole.y, hole.x, hole.y) > hole.radius * 2) &&
+                dist(newHole.x, newHole.y, ball.position.x, ball.position.y) > 50;
+  }
+  holes.push(newHole);
 }
