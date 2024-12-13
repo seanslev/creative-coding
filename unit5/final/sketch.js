@@ -51,8 +51,8 @@ function setup() {
   World.add(world, bumpers);
 
   // Create paddles with a gap between them (100px apart)
-  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 4 }); // Left paddle
-  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 4 }); // Right paddle
+  let paddle1 = Bodies.rectangle(width / 2 - 75, height - 100, 100, 20, { restitution: 3 }); // Left paddle
+  let paddle2 = Bodies.rectangle(width / 2 + 75, height - 100, 100, 20, { restitution: 3 }); // Right paddle
 
   // Create hinge constraint for paddle1 (left paddle) at its leftmost end
   let hinge1 = Constraint.create({
