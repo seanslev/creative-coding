@@ -4,7 +4,7 @@ function setup() {
 
   // disable animation
   
-  frameRate(10);
+  frameRate(2);
 }
 
 function draw() {
