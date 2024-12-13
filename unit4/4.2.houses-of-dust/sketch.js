@@ -1,7 +1,7 @@
 let poem = '';
 
-let grammar = tracery.createGrammar({
-    "material": [
+let grammar = tracery.createGrammar({//creating lists of strings
+    "material": [//16 entries
         "WOOL",
         "DUST",
         "MOSS",
@@ -17,9 +17,9 @@ let grammar = tracery.createGrammar({
         "GLASS",
         "CLAY",
         "METAL",
-        "FIBER"
+        "FIBER" 
     ],
-    "place": [
+    "place": [//15 entries
         "IN A DESERT",
         "IN A FOREST",
         "IN A CITY",
@@ -36,7 +36,7 @@ let grammar = tracery.createGrammar({
         "ON AN OLD ROAD",
         "OVER A HILL"
     ],
-    "light_source": [
+    "light_source": [//16 entries
         "CANDLES",
         "OIL LAMPS",
         "ELECTRICITY",
@@ -54,7 +54,7 @@ let grammar = tracery.createGrammar({
         "FIREWORKS",
         "LIGHTNING"
     ],
-    "inhabitants": [
+    "inhabitants": [//16 entries
         "GHOSTS",
         "WIND",
         "MEMORIES",
@@ -70,10 +70,10 @@ let grammar = tracery.createGrammar({
         "BATS",
         "MICE",
         "FAIRIES",
-        "NOSTALGIA"
+        "NOSTALGIA"// I made unique inhabitants, the results often give a sort of abandoned/ghost like house poems
     ],
     "origin": "A HOUSE OF #material#\n#place#\nILLUMINATED WITH #light_source#\nINHABITED BY #inhabitants#"
-});
+});//16x16x15x16=61,440
 
 poem = grammar.flatten("#origin#");        
 
@@ -87,5 +87,5 @@ function draw() {
   background(220);
 
   textSize(40);
-  text(poem,50,70);
+  text(poem,50,70);//printing poem
 }
