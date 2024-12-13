@@ -3,8 +3,8 @@ function setup() {
   createCanvas(1000, 1000);
 
   // disable animation
-  noLoop();
-  frameRate(5);
+  
+  frameRate(10);
 }
 
 function draw() {
